@@ -1,34 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './styles/App.scss'
+import { getUserBundle } from './services/sportseeApi'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const bundle = await getUserBundle(12)
+        setData(bundle)
+      } catch (e) {
+        setError(e.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    load()
+  }, [])
+
+  if (loading) {
+    return <main className="app">Chargement des données SportSee...</main>
+  }
+
+  if (error) {
+    return <main className="app app--error">{error}</main>
+  }
+
+  if (!data) {
+    return <main className="app app--error">Aucune donnée disponible.</main>
+  }
+
+  const score = Math.round((data.main.todayScore ?? data.main.score ?? 0) * 100)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <main className="app">
+      <h1>SportSee</h1>
+      <p>
+        Bonjour <strong>{data.main.userInfos.firstName}</strong>
       </p>
-    </>
+      <section className="app__grid">
+        <article>
+          <h2>Score du jour</h2>
+          <p>{score}%</p>
+        </article>
+        <article>
+          <h2>Activité (sessions)</h2>
+          <p>{data.activity.sessions.length}</p>
+        </article>
+        <article>
+          <h2>Sessions moyennes</h2>
+          <p>{data.averageSessions.sessions.length}</p>
+        </article>
+        <article>
+          <h2>Performances</h2>
+          <p>{data.performance.data.length}</p>
+        </article>
+      </section>
+    </main>
   )
 }
 

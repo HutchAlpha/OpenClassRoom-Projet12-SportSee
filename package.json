@@ -5,11 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "nodemon server/index.cjs",
+    "start:api": "node server/index.cjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "idx": "^2.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -22,6 +27,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "nodemon": "^3.1.10",
     "sass": "^1.97.3",
     "vite": "^7.3.1"
   }
