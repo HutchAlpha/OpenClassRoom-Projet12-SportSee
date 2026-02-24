@@ -1,27 +1,14 @@
-const API_BASE_URL = 'http://localhost:3000'
+import {Data} from '/Back-end/app/data.js'
 
-const fetchJson = async (path) => {
-  const response = await fetch(`${API_BASE_URL}${path}`)
+export async function getUserBundle(userId) {
+  const main = USER_MAIN_DATA.find(user => user.id === userId)
+  const activity = USER_ACTIVITY.find(a => a.userId === userId)
+  const average = USER_AVERAGE_SESSIONS.find(s => s.userId === userId)
+  const performance = USER_PERFORMANCE.find(p => p.userId === userId)
 
-  if (!response.ok) {
-    throw new Error(`Erreur API (${response.status}) sur ${path}`)
+  if (!main || !activity || !average || !performance) {
+    throw new Error('Données utilisateur introuvables')
   }
 
-  return response.json()
-}
-
-export const getUserBundle = async (userId) => {
-  const [main, activity, averageSessions, performance] = await Promise.all([
-    fetchJson(`/user/${userId}`),
-    fetchJson(`/user/${userId}/activity`),
-    fetchJson(`/user/${userId}/average-sessions`),
-    fetchJson(`/user/${userId}/performance`),
-  ])
-
-  return {
-    main: main.data,
-    activity: activity.data,
-    averageSessions: averageSessions.data,
-    performance: performance.data,
-  }
+  return { main, activity, averageSessions: average, performance }
 }
