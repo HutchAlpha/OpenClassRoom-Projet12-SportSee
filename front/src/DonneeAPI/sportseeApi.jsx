@@ -1,4 +1,4 @@
-import * as Data from '../../../Back-end/app/data.js'
+import * as Data from '../../../back/app/data.js'
 
 export function getData(userId) {
   const main = Data.USER_MAIN_DATA.find(user => user.id === userId)
