@@ -24,3 +24,15 @@ export function getData(userId) {
   }
 }
 
+export function getUserData(userId) {
+  const main = Data.USER_MAIN_DATA.find(user => user.id === userId)
+  if (!main) {
+    throw new Error('Données utilisateur introuvables')
+  }
+  const score = main.todayScore ?? main.score
+  return {
+    ...main,
+    todayScore: score
+  }
+}
+  
