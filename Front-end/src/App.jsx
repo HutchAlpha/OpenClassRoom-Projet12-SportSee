@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import './styles/App.scss'
-import { getUserBundle } from './services/sportseeApi'
+import { getData } from './services/sportseeApi'
+
+
+const userData = getData(12)
+console.log(userData)
 
 function App() {
   const [data, setData] = useState(null)
@@ -10,7 +14,7 @@ function App() {
   useEffect(() => {
     const load = async () => {
       try {
-        const bundle = await getUserBundle(12)
+        const bundle = await getData(12)
         setData(bundle)
       } catch (e) {
         setError(e.message)
