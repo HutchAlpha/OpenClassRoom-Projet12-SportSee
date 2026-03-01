@@ -1,16 +1,26 @@
-import * as Data from '../../../back/app/data.js'
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/'
 
-export function getData(userId) {
-  const main = Data.USER_MAIN_DATA.find(user => user.id === userId)
-  const activity = Data.USER_ACTIVITY.find(kiloCal => kiloCal.userId === userId)
-  const average = Data.USER_AVERAGE_SESSIONS.find(session => session.userId === userId)
-  const performance = Data.USER_PERFORMANCE.find(kindata => kindata.userId === userId)
+async function fetchEndpoint(path) {
+  const response = await fetch(`${API_BASE_URL}${path}`)
 
-  if (!main || !activity || !average || !performance) {
-    throw new Error('Données utilisateur introuvables')
+  if (!response.ok) {
+    throw new Error(`Erreur API (${response.status}) sur ${path}`)
   }
 
-  //!Type de score
+  const payload = await response.json()
+  return payload.data
+}
+
+export async function getData(userId) {
+  const id = Number(userId)
+
+  const [main, activity, averageSessions, performance] = await Promise.all([
+    fetchEndpoint(`user/${id}`),
+    fetchEndpoint(`user/${id}/activity`),
+    fetchEndpoint(`user/${id}/average-sessions`),
+    fetchEndpoint(`user/${id}/performance`)
+  ])
+
   const score = main.todayScore ?? main.score
 
   return {
@@ -19,20 +29,7 @@ export function getData(userId) {
       todayScore: score
     },
     activity,
-    averageSessions: average,
+    averageSessions,
     performance
   }
 }
-
-export function getUserData(userId) {
-  const main = Data.USER_MAIN_DATA.find(user => user.id === userId)
-  if (!main) {
-    throw new Error('Données utilisateur introuvables')
-  }
-  const score = main.todayScore ?? main.score
-  return {
-    ...main,
-    todayScore: score
-  }
-}
-  
