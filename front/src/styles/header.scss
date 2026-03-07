@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    align-items: center;
+    background-color: #020203;
+    padding: 20px;
+    color: white;
+
+    &__logo {
+        width: 200px;
+
+        img {
+        width: 100%;
+        }
+    }
+
+    &__nav {
+        flex: 1;
+    }
+
+    &__list {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    &__item {
+        list-style: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
