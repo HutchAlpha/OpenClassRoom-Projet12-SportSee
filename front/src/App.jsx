@@ -24,10 +24,10 @@ function App() {
 	}
 
 	if (!data) {
-		return <div>Chargement...</div>
+		return <div>Chargement des données en cours...</div>
 	}
 
-	return <div>Bienvenue {data.main.userInfos.firstName}</div>
+	return <div>Bonjour <strong>{data.main.userInfos.firstName}</strong></div>
 }
 
 export default App
