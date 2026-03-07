@@ -30,4 +30,5 @@ function App() {
 	return <div>Bonjour <strong>{data.main.userInfos.firstName}</strong></div>
 }
 
+
 export default App
