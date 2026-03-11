@@ -27,7 +27,9 @@ function App() {
 		return <div>Chargement des données en cours...</div>
 	}
 
-	return <div>Bonjour <strong>{data.main.userInfos.firstName}</strong></div>
+	return <div className="App">
+		Bonjour <strong>{data.main.userInfos.firstName}</strong>
+		</div>
 }
 
 
