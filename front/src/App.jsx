@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './styles/App.scss'
 import { getData } from './DonneeAPI/sportseeapi.jsx'
+import Resultat from './Resultat.jsx'
 
 function App() {
 	const [data, setData] = useState(null)
@@ -29,6 +30,7 @@ function App() {
 
 	return <div className="App">
 		Bonjour <strong>{data.main.userInfos.firstName}</strong>
+		<Resultat data={data} />
 		</div>
 }
 
