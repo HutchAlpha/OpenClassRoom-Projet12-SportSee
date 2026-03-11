@@ -1,44 +1,52 @@
 import './styles/Resultat.scss'
-import Calorie from '../public/assets/calories.svg'
-import Cycling from '../public/assets/cycling.svg'
-import Carbs from '../public/assets/carbs.svg'
-import Fat from '../public/assets/fat.svg'
 
 function Resultat({ data }) {
+    const keyData = data?.main?.keyData
 
-    <div className="resultat">
-        <div className="resultat__content">
-            <img caloriesIcon src={Calorie} alt="Calories" />
-            <div className="resultat__info">
-                <p className="resultat__value">1930</p>
-                <p className="resultat__label">Calories</p>
-            </div>
-        </div>    
+    if (!keyData) {
+        return null
+    }
 
-        <div className="resultat__content">
-            <img caloriesIcon src={Cycling} alt="proteiness" />
-            <div className="resultat__info">
-                <p className="resultat__value">1930</p>
-                <p className="resultat__label">Calories</p>
-            </div>
+    const cards = [
+        {
+            icon: '/assets/calories.svg',
+            alt: 'Calories',
+            value: `${keyData.calorieCount}kCal`,
+            label: 'Calories'
+        },
+        {
+            icon: '/assets/cycling.svg',
+            alt: 'Proteines',
+            value: `${keyData.proteinCount}g`,
+            label: 'Proteines'
+        },
+        {
+            icon: '/assets/carbs.svg',
+            alt: 'Glucides',
+            value: `${keyData.carbohydrateCount}g`,
+            label: 'Glucides'
+        },
+        {
+            icon: '/assets/fat.svg',
+            alt: 'Lipides',
+            value: `${keyData.lipidCount}g`,
+            label: 'Lipides'
+        }
+    ]
+
+    return (
+        <div className="resultat">
+            {cards.map(({ icon, alt, value, label }) => (
+                <div className="resultat__content" key={label}>
+                    <img src={icon} alt={alt} />
+                    <div className="resultat__info">
+                        <p className="resultat__value">{value}</p>
+                        <p className="resultat__label">{label}</p>
+                    </div>
+                </div>
+            ))}
         </div>
-
-        <div className="resultat__content">
-            <img caloriesIcon src={Carbs} alt="Glucides" />
-            <div className="resultat__info">
-                <p className="resultat__value">1930</p>
-                <p className="resultat__label">Calories</p>
-            </div>
-        </div>    
-
-        <div className="resultat__content">
-            <img caloriesIcon src={Fat} alt="Lipides" />
-            <div className="resultat__info">
-                <p className="resultat__value">1930</p>
-                <p className="resultat__label">Calories</p>
-            </div>
-        </div>        
-    </div>
+    )
 }
 
 export default Resultat;

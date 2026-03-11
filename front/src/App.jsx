@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './styles/App.scss'
-import { getData } from './DonneeAPI/sportseeapi.jsx'
+import { getData } from './DonneeAPI/sportseeApi.jsx'
 import Resultat from './Resultat.jsx'
 
 function App() {
