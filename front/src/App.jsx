@@ -47,10 +47,10 @@ function App() {
 
 	return <div className="App">
 
-		Bonjour <strong>{data.main.userInfos.firstName}</strong>
+		<h1>Bonjour <strong>{data.main.userInfos.firstName}</strong></h1>
         
 		{beatRecord && (
-			<h1 className="congrats-banner">Félicitations ! Vous avez explosé vos objectifs hier 👏</h1>
+			<p className="congrats-banner">Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
 		)}
 
 		<Resultat data={data} />
