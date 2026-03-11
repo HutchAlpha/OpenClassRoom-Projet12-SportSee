@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './styles/App.scss'
 import { getData } from './DonneeAPI/sportseeApi.jsx'
 import Resultat from './Resultat.jsx'
+import Activite from './Graph/Activite.jsx'
 
 function App() {
 	const [data, setData] = useState(null)
@@ -52,6 +53,10 @@ function App() {
 		{beatRecord && (
 			<p className="congrats-banner">Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
 		)}
+
+		<div className='DCanvas'>
+			<Activite data={data} />
+		</div>
 
 		<Resultat data={data} />
 		</div>
