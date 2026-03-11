@@ -2,31 +2,43 @@
     display: flex;
     align-items: center;
     background-color: #020203;
-    padding: 20px;
+    padding: 20px 20px 20px 110px;
     color: white;
-    z-index: 10;
+    z-index: 1;
+    position: relative;
+    height: 90px;
 
     &__logo {
-        width: 200px;
+        position: absolute;
+        left: 28px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 178px;
+        z-index: 6;
 
         img {
         width: 100%;
+        height: auto;
         }
     }
 
     &__nav {
         flex: 1;
+        padding-left: 220px;
     }
 
     &__list {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
 
     &__item {
-        list-style: none;
         font-size: 20px;
         cursor: pointer;
+        color: #fff;
     }
 }

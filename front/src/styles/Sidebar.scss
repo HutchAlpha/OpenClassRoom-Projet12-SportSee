@@ -1,26 +1,27 @@
 .sidebar {
     position: fixed;
     left: 0;
-    top: 0;
+    top: 80px;
     bottom: 0;
     width: 90px;
-    gap: 10px;
     background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     z-index: 5;
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
 
 .sidebar__icons {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .sidebar__icon-btn {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-color: #fff;
     border-radius: 4px;
     display: flex;
@@ -31,14 +32,14 @@
 
 .sidebar__icon-btn img,
 .sidebar__icon-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     fill: #ff0000;
 }
 
 .sidebar__copyright {
     position: absolute;
-    bottom: 90px;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%) rotate(-90deg);
     transform-origin: center;
