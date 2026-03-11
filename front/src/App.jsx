@@ -28,8 +28,31 @@ function App() {
 		return <div>Chargement des données en cours...</div>
 	}
 
+
+
+	//!Gestion logique record objectifs
+	const activitySessions = data.activity.sessions;
+
+	let beatRecordCalories = false;
+
+	if (activitySessions.length >= 2) {
+		const lastCal = activitySessions[activitySessions.length - 1].calories;
+		const prevCal = activitySessions[activitySessions.length - 2].calories;
+		beatRecordCalories = lastCal > prevCal;
+	}
+
+	const beatRecord = beatRecordCalories;
+	console.log(`Calories: ${activitySessions.at(-1)?.calories} > ${activitySessions.at(-2)?.calories} ? ${beatRecordCalories}`);
+
+
 	return <div className="App">
+
 		Bonjour <strong>{data.main.userInfos.firstName}</strong>
+        
+		{beatRecord && (
+			<h1 className="congrats-banner">Félicitations ! Vous avez explosé vos objectifs hier 👏</h1>
+		)}
+
 		<Resultat data={data} />
 		</div>
 }
