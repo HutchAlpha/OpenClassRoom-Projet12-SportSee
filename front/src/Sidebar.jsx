@@ -21,8 +21,11 @@ function Sidebar() {
             <div className="sidebar__item">
                 <img src={Bodybuilding} alt="Musculation" />
             </div>
+     
+            <div className="sidebar__copyright">
+                <p>Copyright, SportSee 2026</p>
+            </div>
 
-            <p>Copyright, SportSee 2026</p>
         </div>
     );
 }
