@@ -14,7 +14,7 @@ const svgRefSession = useRef();
         //! nettoyage
         svg.selectAll("*").remove();
 
-        //! FOND ROUGE UNI (comme image)
+        //! FOND ROUGE
         svg.append("rect")
         .attr("width", "100%").attr("height", "100%")
         .attr("fill", "#FF0000");
@@ -34,7 +34,7 @@ const svgRefSession = useRef();
         //! échelle X
         const x = scaleBand()
         .domain(days)
-        .range([30, width - 30]);  // Espacement image
+        .range([30, width - 30]); 
 
         //! échelle Y
         const y = scaleLinear()

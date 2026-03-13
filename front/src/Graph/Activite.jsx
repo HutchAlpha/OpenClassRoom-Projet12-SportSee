@@ -140,6 +140,7 @@ function Activite({ data }) {
       .on("mouseover", function(event, d) {
 
         tooltip.style("display", null);
+        
 
         tooltipKg.text(`${d.kilogram}kg`);
         tooltipCal.text(`${d.calories}kCal`);
