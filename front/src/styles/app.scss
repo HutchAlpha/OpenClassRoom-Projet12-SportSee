@@ -4,3 +4,25 @@
     background-color: white;
     padding-left: 90px;  
 }
+
+.BlockCentral {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    padding-left: 90px;  
+}
+
+.DCanvas{
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.Resultat{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

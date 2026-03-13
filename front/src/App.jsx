@@ -56,16 +56,18 @@ function App() {
 		{beatRecord && (
 			<p className="congrats-banner">Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
 		)}
-
-		<div className='DCanvas'>
-			<Activite data={data} />
-			<Session data={data} />
-			<Objectif data={data} />
-			<Graph data={data} />
-		</div>
-
-		<Resultat data={data} />
-		</div>
+		<div className='BlockCentral'>		
+			<div className='DCanvas'>
+				<Activite data={data} />
+				<Session data={data} />
+				<Objectif data={data} />
+				<Graph data={data} />
+			</div>
+			<div className='Resultat'>
+				<Resultat data={data} />
+			</div>	
+		</div>	
+	</div>
 }
 
 
