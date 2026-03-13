@@ -1,15 +1,15 @@
 .resultat {
     display: flex;
     flex-direction: column;
+    height: 100%;
     gap: 1rem;
     align-items: flex-end;
-    padding: 2rem 0; 
 
     .resultat__content {
         display: flex;
         align-items: center;
         gap: 1.5rem;
-        
+        background-color: #fbfbfb;
         border-radius: 12px;
         padding: 1.5rem 2rem;
         min-width: 280px;
@@ -33,8 +33,8 @@
     }
 
     .resultat__value {
-        font-size: 1.75rem;
-        font-weight: 700;
+        font-size: 20px;
+        font-weight: 600;
         line-height: 1;
         margin: 0 0 0.125rem 0;
         color: #2d2d2d;
