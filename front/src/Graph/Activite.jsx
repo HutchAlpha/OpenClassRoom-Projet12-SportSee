@@ -89,14 +89,14 @@ function Activite({ data }) {
     //! légende poids
     svg
       .append("circle")
-      .attr("cx", width - 220)
+      .attr("cx", width - 310)
       .attr("cy", 25)
       .attr("r", 4)
       .attr("fill", "#282D30");
 
     svg
       .append("text")
-      .attr("x", width - 205)
+      .attr("x", width - 295)
       .attr("y", 29)
       .attr("font-size", "14px")
       .attr("fill", "#74798C")
@@ -105,14 +105,14 @@ function Activite({ data }) {
     //! légende calories
     svg
       .append("circle")
-      .attr("cx", width - 175)
+      .attr("cx", width - 200)
       .attr("cy", 25)
       .attr("r", 4)
       .attr("fill", "#E60000");
 
     svg
       .append("text")
-      .attr("x", width - 160)
+      .attr("x", width - 185)
       .attr("y", 29)
       .attr("font-size", "14px")
       .attr("fill", "#74798C")
