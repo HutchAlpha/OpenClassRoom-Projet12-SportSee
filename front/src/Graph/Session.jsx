@@ -5,8 +5,8 @@ function Session({ data }) {
 const svgRefSession = useRef();
 
     useEffect(() => {
-        const width = 300;
-        const height = 200;
+        const width = 258;
+        const height = 263;
 
         //! sélection du svg
         const svg = select(svgRefSession.current);
@@ -34,12 +34,12 @@ const svgRefSession = useRef();
         //! échelle X
         const x = scaleBand()
         .domain(days)
-        .range([30, width - 30]); 
+        .range([20, width - 20]); 
 
         //! échelle Y
         const y = scaleLinear()
         .domain([0, Math.max(60, max(sessions, d => d.sessionLength))])
-        .range([height - 30, 30]);
+        .range([height - 40, 100]);
 
         //! générateur de ligne
         const lineGenerator = line()
@@ -68,21 +68,31 @@ const svgRefSession = useRef();
         .attr("fill", "white");
 
         //! axe X
-        svg
+        const xAxisG = svg
         .append("g")
-        .attr("transform", `translate(0, ${height - 25})`)
-        .call(axisBottom(x))
-        .selectAll("text")
-        .attr("fill", "white");
+        .attr("transform", `translate(0, ${height - 30})`)
+        .call(axisBottom(x).tickSize(0));
+        xAxisG.select(".domain").remove();
+        xAxisG.selectAll("text")
+        .attr("fill", "rgba(255,255,255,0.5)")
+        .attr("dy", "1em");
 
         //! titre
         svg
         .append("text")
-        .attr("x", 25)
-        .attr("y", 22)
+        .attr("x", 20)
+        .attr("y", 45)
         .attr("font-size", "14px")
-        .attr("fill", "white")
-        .text("Durée moyenne des sessions");
+        .attr("fill", "rgba(255,255,255,0.7)")
+        .text("Durée moyenne des");
+
+        svg
+        .append("text")
+        .attr("x", 20)
+        .attr("y", 65)
+        .attr("font-size", "14px")
+        .attr("fill", "rgba(255,255,255,0.7)")
+        .text("sessions");
 
         //? TOOLTIP
         const tooltip = svg
@@ -115,12 +125,14 @@ const svgRefSession = useRef();
         .on("mousemove", function(event) {
             const [xPos] = pointer(event);
             const bandwidth = x.bandwidth();
-            const index = Math.floor((xPos - 30) / bandwidth);
+            const index = Math.floor((xPos - 20) / bandwidth);
             if (index >= 0 && index < sessions.length) {
                 const value = sessions[index].sessionLength;
+                const tipX = x(days[index]) + x.bandwidth()/2 - 27;
+                const tipY = Math.max(20, y(value) - 40);
                 tooltip
                 .style("display", null)
-                .attr("transform", `translate(${x(days[index]) + x.bandwidth()/2 - 27}, 25)`);
+                .attr("transform", `translate(${tipX}, ${tipY})`);
                 tooltipText.text(`${value} min`);
             }
         })

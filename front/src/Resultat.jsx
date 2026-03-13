@@ -15,7 +15,7 @@ function Resultat({ data }) {
             label: 'Calories'
         },
         {
-            icon: '/assets/cycling.svg',
+            icon: '/assets/protein.svg',
             alt: 'Proteines',
             value: `${keyData.proteinCount}g`,
             label: 'Proteines'

@@ -22,12 +22,20 @@ function Activite({ data }) {
       .attr("height", height)
       .attr("viewBox", `0 0 ${width} ${height}`);
 
+    //! fond du graphique
+    svg.append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "#FBFBFB")
+      .attr("rx", 5);
+
     //! récupération des données
     const sessions = data.activity.sessions || [];
+    const dayLabels = sessions.map((_, i) => i + 1);
 
     //! échelle X
     const x = scaleBand()
-      .domain(sessions.map(d => d.day))
+      .domain(dayLabels)
       .range([50, width - 40])
       .padding(0.4);
 
@@ -97,30 +105,43 @@ function Activite({ data }) {
     //! légende calories
     svg
       .append("circle")
-      .attr("cx", width - 120)
+      .attr("cx", width - 175)
       .attr("cy", 25)
       .attr("r", 4)
       .attr("fill", "#E60000");
 
     svg
       .append("text")
-      .attr("x", width - 105)
+      .attr("x", width - 160)
       .attr("y", 29)
       .attr("font-size", "14px")
       .attr("fill", "#74798C")
       .text("Calories brûlées (kCal)");
 
     //! axe X
-    svg
-      .append("g")
+    const xAxisG = svg.append("g")
       .attr("transform", `translate(0, ${height - 40})`)
-      .call(axisBottom(x));
+      .call(axisBottom(x).tickSize(0));
+    xAxisG.select(".domain").remove();
+    xAxisG.selectAll("text").attr("fill", "#9B9EAC").attr("dy", "1.5em");
 
     //! axe Y droite
-    svg
-      .append("g")
+    const yAxisG = svg.append("g")
       .attr("transform", `translate(${width - 40}, 0)`)
-      .call(axisRight(yPoids).ticks(max(sessions, d => d.kilogram) - minPoids(sessions)));
+      .call(axisRight(yPoids).ticks(3));
+    yAxisG.select(".domain").remove();
+    yAxisG.selectAll(".tick line").remove();
+
+    //! lignes de grille horizontales
+    yPoids.ticks(3).forEach(v => {
+      svg.append("line")
+        .attr("x1", 50)
+        .attr("x2", width - 40)
+        .attr("y1", yPoids(v))
+        .attr("y2", yPoids(v))
+        .attr("stroke", "#DEDEDE")
+        .attr("stroke-dasharray", "3,3");
+    });
 
     //! barres poids
     svg
@@ -129,7 +150,7 @@ function Activite({ data }) {
       .enter()
       .append("rect")
       .attr("class", "poids")
-      .attr("x", d => x(d.day))
+      .attr("x", (d, i) => x(i + 1))
       .attr("y", d => yPoids(d.kilogram))
       .attr("width", 7)
       .attr("height", d => height - 40 - yPoids(d.kilogram))
@@ -172,7 +193,7 @@ function Activite({ data }) {
       .enter()
       .append("rect")
       .attr("class", "calories")
-      .attr("x", d => x(d.day) + 12)
+      .attr("x", (d, i) => x(i + 1) + 12)
       .attr("y", d => yCalories(d.calories))
       .attr("width", 7)
       .attr("height", d => height - 40 - yCalories(d.calories))
@@ -186,7 +207,7 @@ function Activite({ data }) {
     return Math.min(...sessions.map(d => d.kilogram));
   }
 
-  return <svg ref={svgRefActivite}></svg>;
+  return <svg ref={svgRefActivite} style={{ width: '100%', height: 'auto', display: 'block' }}></svg>;
 }
 
 export default Activite;

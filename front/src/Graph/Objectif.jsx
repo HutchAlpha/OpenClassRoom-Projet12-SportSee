@@ -43,7 +43,7 @@ function Objectif({ data }) {
 
         const angle = scaleLinear()
         .domain([0, 1])
-        .range([0, -2 * Math.PI]); // Vers la gauche
+        .range([0, 2 * Math.PI]);
 
 
         //! générateur d'arc background complet
@@ -118,7 +118,6 @@ function Objectif({ data }) {
         .attr("fill", "#20253A")
         .text("Score");
     }, [data]);
-
 
     return <svg ref={svgRefObjectif}></svg>;
 }
