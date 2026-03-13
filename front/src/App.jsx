@@ -3,6 +3,9 @@ import './styles/App.scss'
 import { getData } from './DonneeAPI/sportseeApi.jsx'
 import Resultat from './Resultat.jsx'
 import Activite from './Graph/Activite.jsx'
+import Session from './Graph/Session.jsx'
+import Objectif from './Graph/Objectif.jsx'
+import Graph from './Graph/Graph.jsx'
 
 function App() {
 	const [data, setData] = useState(null)
@@ -56,6 +59,9 @@ function App() {
 
 		<div className='DCanvas'>
 			<Activite data={data} />
+			<Session data={data} />
+			<Objectif data={data} />
+			<Graph data={data} />
 		</div>
 
 		<Resultat data={data} />
