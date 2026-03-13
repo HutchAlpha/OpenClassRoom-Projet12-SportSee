@@ -1,4 +1,4 @@
-import { select, scaleBand, scaleLinear, max, axisBottom, axisLeft, axisRight } from "d3";
+import { select, scaleBand, scaleLinear, max, axisBottom, axisRight, pointer } from "d3";
 import { useRef, useEffect } from "react";
 
 function Activite({ data }) {
@@ -14,7 +14,7 @@ function Activite({ data }) {
     const svg = select(svgRef.current);
 
     //! nettoyage du svg
-    svg.selectAll("*").remove(); 
+    svg.selectAll("*").remove();
 
     //! configuration du svg
     svg
@@ -41,47 +41,74 @@ function Activite({ data }) {
       .domain([minPoids(sessions) - 1, max(sessions, d => d.kilogram) + 1])
       .range([height - 40, 40]);
 
-    //! titre du graphique
-  svg
-    .append("text")
-    .attr("x", 50)
-    .attr("y", 25)
-    .attr("font-size", "15px")
-    .attr("font-weight", "600")
-    .attr("fill", "#20253A")
-    .text("Activité quotidienne");
+    //? TOOLTIP (toujours au dessus)
+    const tooltip = svg
+      .append("g")
+      .style("display", "none");
 
-    //! Legende Poids
+    tooltip
+      .append("rect")
+      .attr("width", 60)
+      .attr("height", 50)
+      .attr("fill", "#E60000");
+
+    const tooltipKg = tooltip
+      .append("text")
+      .attr("x", 30)
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "12px");
+
+    const tooltipCal = tooltip
+      .append("text")
+      .attr("x", 30)
+      .attr("y", 38)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "12px");
+
+    //! titre
     svg
-    .append("circle")
-    .attr("cx", width - 220)
-    .attr("cy", 25)
-    .attr("r", 4)
-    .attr("fill", "#282D30");
+      .append("text")
+      .attr("x", 50)
+      .attr("y", 25)
+      .attr("font-size", "15px")
+      .attr("font-weight", "600")
+      .attr("fill", "#20253A")
+      .text("Activité quotidienne");
+
+    //! légende poids
+    svg
+      .append("circle")
+      .attr("cx", width - 220)
+      .attr("cy", 25)
+      .attr("r", 4)
+      .attr("fill", "#282D30");
 
     svg
-    .append("text")
-    .attr("x", width - 205)
-    .attr("y", 29)
-    .attr("font-size", "14px")
-    .attr("fill", "#74798C")
-    .text("Poids (kg)");
+      .append("text")
+      .attr("x", width - 205)
+      .attr("y", 29)
+      .attr("font-size", "14px")
+      .attr("fill", "#74798C")
+      .text("Poids (kg)");
 
-    //! Legende Calories
+    //! légende calories
     svg
-    .append("circle")
-    .attr("cx", width - 120)
-    .attr("cy", 25)
-    .attr("r", 4)
-    .attr("fill", "#E60000");
+      .append("circle")
+      .attr("cx", width - 120)
+      .attr("cy", 25)
+      .attr("r", 4)
+      .attr("fill", "#E60000");
 
     svg
-    .append("text")
-    .attr("x", width - 105)
-    .attr("y", 29)
-    .attr("font-size", "14px")
-    .attr("fill", "#74798C")
-    .text("Calories brûlées (kCal)");
+      .append("text")
+      .attr("x", width - 105)
+      .attr("y", 29)
+      .attr("font-size", "14px")
+      .attr("fill", "#74798C")
+      .text("Calories brûlées (kCal)");
 
     //! axe X
     svg
@@ -89,18 +116,11 @@ function Activite({ data }) {
       .attr("transform", `translate(0, ${height - 40})`)
       .call(axisBottom(x));
 
-    //! axe Y droite (calories)
+    //! axe Y droite
     svg
       .append("g")
       .attr("transform", `translate(${width - 40}, 0)`)
-      .call(axisRight(yPoids));
-
-    //! label axe X
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", height - 5)
-      .attr("text-anchor", "middle")
+      .call(axisRight(yPoids).ticks(max(sessions, d => d.kilogram) - minPoids(sessions)));
 
     //! barres poids
     svg
@@ -114,7 +134,35 @@ function Activite({ data }) {
       .attr("width", 7)
       .attr("height", d => height - 40 - yPoids(d.kilogram))
       .attr("fill", "#282D30")
-      .attr("rx", 3);
+      .attr("rx", 3)
+
+      //? HOVER START
+      .on("mouseover", function(event, d) {
+
+        tooltip.style("display", null);
+
+        tooltipKg.text(`${d.kilogram}kg`);
+        tooltipCal.text(`${d.calories}kCal`);
+
+        tooltip.raise(); // Infos au dessus du graphique
+
+      })
+
+      //? HOVER MOVE
+      .on("mousemove", function(event) {
+
+        const [xPos] = pointer(event);
+
+        tooltip.attr("transform", `translate(${xPos - 30}, 60)`);
+
+      })
+
+      //? HOVER END
+      .on("mouseout", function() {
+
+        tooltip.style("display", "none");
+
+      });
 
     //! barres calories
     svg
