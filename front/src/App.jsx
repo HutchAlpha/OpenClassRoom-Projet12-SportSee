@@ -60,8 +60,8 @@ function App() {
 			<div className='DCanvas'>
 				<Activite data={data} />
 				<Session data={data} />
-				<Objectif data={data} />
 				<Graph data={data} />
+				<Objectif data={data} />
 			</div>
 			<div className='Resultat'>
 				<Resultat data={data} />
