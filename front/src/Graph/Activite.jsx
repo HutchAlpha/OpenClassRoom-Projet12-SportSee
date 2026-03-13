@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 
 function Activite({ data }) {
 
-  const svgRef = useRef();
+  const svgRefActivite = useRef();
 
   useEffect(() => {
 
@@ -11,7 +11,7 @@ function Activite({ data }) {
     const height = 320;
 
     //! sélection du svg
-    const svg = select(svgRef.current);
+    const svg = select(svgRefActivite.current);
 
     //! nettoyage du svg
     svg.selectAll("*").remove();
@@ -23,7 +23,7 @@ function Activite({ data }) {
       .attr("viewBox", `0 0 ${width} ${height}`);
 
     //! récupération des données
-    const sessions = data.activity.sessions;
+    const sessions = data.activity.sessions || [];
 
     //! échelle X
     const x = scaleBand()
@@ -185,7 +185,7 @@ function Activite({ data }) {
     return Math.min(...sessions.map(d => d.kilogram));
   }
 
-  return <svg ref={svgRef}></svg>;
+  return <svg ref={svgRefActivite}></svg>;
 }
 
 export default Activite;
