@@ -7,7 +7,7 @@
 
 .MessageJoueur {    
     padding-left: 90px;  
-    font-size: 28px;    
+    font-size: 48px;    
     padding-top: 40px;
     padding-bottom: 30px;
 
@@ -15,11 +15,13 @@
 
 .Felicitation {
     padding-left: 90px; 
+    padding-bottom: 40px;
+
 }
 
-strong {
+.NomJoueur{
     color: red;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 .BlockCentral {

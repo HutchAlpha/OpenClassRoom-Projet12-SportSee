@@ -51,7 +51,7 @@ function App() {
 
 	return <div className="App">
 
-		<h1 className="MessageJoueur">Bonjour <strong>{data.main.userInfos.firstName}</strong></h1>
+		<h1 className="MessageJoueur">Bonjour <span className="NomJoueur">{data.main.userInfos.firstName}</span></h1>
 		{beatRecord && (
 			<p className="Felicitation">Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
 		)}
