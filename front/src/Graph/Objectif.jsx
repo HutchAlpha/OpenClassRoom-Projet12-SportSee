@@ -1,4 +1,4 @@
-import { select, scaleLinear, arc, pointer } from "d3";
+import { select, scaleLinear, arc } from "d3";
 import { useRef, useEffect } from "react";
 
 
