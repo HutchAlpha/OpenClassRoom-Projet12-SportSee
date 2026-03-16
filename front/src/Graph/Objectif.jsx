@@ -114,7 +114,7 @@ function Objectif({ data }) {
         .attr("y", 40)
         .attr("text-anchor", "start")
         .attr("font-size", "15px")
-        .attr("font-weight", "500")
+        .attr("font-weight", "600")
         .attr("fill", "#20253A")
         .text("Score");
     }, [data]);
