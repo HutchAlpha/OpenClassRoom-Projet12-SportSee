@@ -10,11 +10,12 @@ import Graph from './Graph/Graph.jsx'
 function App() {
 	const [data, setData] = useState(null)
 	const [error, setError] = useState('')
+	const [Id, setId] = useState(12);
 
 	useEffect(() => {
 		const loadData = async () => {
 			try {
-				const response = await getData(12)
+				const response = await getData(Id)
 				setData(response)
 			} catch (err) {
 				setError(err.message)
@@ -22,7 +23,7 @@ function App() {
 		}
 
 		loadData()
-	}, [])
+	}, [Id])
 
 	if (error) {
 		return <div>Erreur: {error}</div>
@@ -31,9 +32,7 @@ function App() {
 	if (!data) {
 		return <div>Chargement des données en cours...</div>
 	}
-
-
-
+	
 	//!Gestion logique record objectifs
 	const activitySessions = data.activity.sessions;
 
@@ -50,6 +49,9 @@ function App() {
 
 
 	return <div className="App">
+
+		<button className="BoutonId" onClick={() => setId(12)}>Karl (12)</button>
+		<button className="BoutonId" onClick={() => setId(18)}>Cecilia (18)</button>
 
 		<h1 className="MessageJoueur">Bonjour <span className="NomJoueur">{data.main.userInfos.firstName}</span></h1>
 		{beatRecord && (
