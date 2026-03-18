@@ -2,11 +2,9 @@ import { select, scaleBand, scaleLinear, max, axisBottom, axisRight, pointer } f
 import { useRef, useEffect } from "react";
 
 function Activite({ data }) {
-
   const svgRefActivite = useRef();
 
   useEffect(() => {
-
     const width = 825;
     const height = 320;
 
@@ -48,33 +46,6 @@ function Activite({ data }) {
     const yPoids = scaleLinear()
       .domain([minPoids(sessions) - 1, max(sessions, d => d.kilogram) + 1])
       .range([height - 40, 40]);
-
-    //? TOOLTIP (toujours au dessus)
-    const tooltip = svg
-      .append("g")
-      .style("display", "none");
-
-    tooltip
-      .append("rect")
-      .attr("width", 60)
-      .attr("height", 50)
-      .attr("fill", "#E60000");
-
-    const tooltipKg = tooltip
-      .append("text")
-      .attr("x", 30)
-      .attr("y", 20)
-      .attr("text-anchor", "middle")
-      .attr("fill", "white")
-      .attr("font-size", "12px");
-
-    const tooltipCal = tooltip
-      .append("text")
-      .attr("x", 30)
-      .attr("y", 38)
-      .attr("text-anchor", "middle")
-      .attr("fill", "white")
-      .attr("font-size", "12px");
 
     //! titre
     svg
@@ -122,8 +93,17 @@ function Activite({ data }) {
     const xAxisG = svg.append("g")
       .attr("transform", `translate(0, ${height - 40})`)
       .call(axisBottom(x).tickSize(0));
+    
     xAxisG.select(".domain").remove();
-    xAxisG.selectAll("text").attr("fill", "#9B9EAC").attr("dy", "1.5em");
+
+    const textOffset = 9.5 - (x.bandwidth() / 2);
+
+    xAxisG.selectAll("text")
+      .attr("fill", "#9B9EAC")
+      .attr("dy", "1.5em")
+      .attr("dx", textOffset) 
+      .style("font-size", "14px")
+      .style("font-weight", "500");
 
     //! axe Y droite
     const yAxisG = svg.append("g")
@@ -143,6 +123,20 @@ function Activite({ data }) {
         .attr("stroke-dasharray", "3,3");
     });
 
+    //? Fonds gris pour le hover (cachés par défaut, dessinés sous les barres)
+    const hoverBackgrounds = svg
+      .selectAll(".hover-bg")
+      .data(sessions)
+      .enter()
+      .append("rect")
+      .attr("class", "hover-bg")
+      .attr("x", (d, i) => x(i + 1) - 18) // Centré autour des deux barres 
+      .attr("y", 40) 
+      .attr("width", 56) 
+      .attr("height", height - 80) // S'arrête à l'axe X
+      .attr("fill", "#C4C4C4")
+      .attr("opacity", 0);
+
     //! barres poids
     svg
       .selectAll(".poids")
@@ -155,36 +149,7 @@ function Activite({ data }) {
       .attr("width", 7)
       .attr("height", d => height - 40 - yPoids(d.kilogram))
       .attr("fill", "#282D30")
-      .attr("rx", 3)
-
-      //? HOVER START
-      .on("mouseover", function(event, d) {
-
-        tooltip.style("display", null);
-        
-
-        tooltipKg.text(`${d.kilogram}kg`);
-        tooltipCal.text(`${d.calories}kCal`);
-
-        tooltip.raise(); // Infos au dessus du graphique
-
-      })
-
-      //? HOVER MOVE
-      .on("mousemove", function(event) {
-
-        const [xPos] = pointer(event);
-
-        tooltip.attr("transform", `translate(${xPos - 30}, 60)`);
-
-      })
-
-      //? HOVER END
-      .on("mouseout", function() {
-
-        tooltip.style("display", "none");
-
-      });
+      .attr("rx", 3);
 
     //! barres calories
     svg
@@ -200,6 +165,78 @@ function Activite({ data }) {
       .attr("fill", "#E60000")
       .attr("rx", 3);
 
+    //? TOOLTIP stylisé selon la maquette (dessiné au-dessus de tout)
+    const tooltip = svg
+      .append("g")
+      .style("display", "none");
+
+    tooltip
+      .append("rect")
+      .attr("width", 60)
+      .attr("height", 70)
+      .attr("fill", "#E60000"); 
+
+    const tooltipKg = tooltip
+      .append("text")
+      .attr("x", 30)
+      .attr("y", 25)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "11px")
+      .attr("font-weight", "500");
+
+    const tooltipCal = tooltip
+      .append("text")
+      .attr("x", 30)
+      .attr("y", 55)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "11px")
+      .attr("font-weight", "500");
+
+    //? Zones de capture de la souris
+    svg
+      .selectAll(".hover-zone")
+      .data(sessions)
+      .enter()
+      .append("rect")
+      .attr("class", "hover-zone")
+      .attr("x", (d, i) => x(i + 1) - 18)
+      .attr("y", 40)
+      .attr("width", 56)
+      .attr("height", height - 80)
+      .attr("fill", "transparent") // Totalement invisible
+      .on("mouseover", function(event, d) {
+        const i = sessions.indexOf(d);
+        
+        // Afficher le fond gris correspondant
+        hoverBackgrounds.filter((_, index) => index === i).attr("opacity", 0.5);
+
+        // Mettre à jour et afficher la tooltip
+        tooltip.style("display", "block");
+        tooltipKg.text(`${d.kilogram}kg`);
+        tooltipCal.text(`${d.calories}Kcal`);
+        tooltip.raise();
+      })
+      .on("mousemove", function(event, d) {
+        const i = sessions.indexOf(d);
+        const [_, yPos] = pointer(event);
+        
+        // Positionner la tooltip sur la droite du rectangle gris (avec un léger décalage)
+        const xPosToolTip = x(i + 1) + 48; 
+        
+        // La hauteur de la tooltip suit légèrement la souris
+        tooltip.attr("transform", `translate(${xPosToolTip}, ${yPos - 35})`);
+      })
+      .on("mouseout", function(event, d) {
+        const i = sessions.indexOf(d);
+        
+        // Cacher le fond gris
+        hoverBackgrounds.filter((_, index) => index === i).attr("opacity", 0);
+        
+        tooltip.style("display", "none");
+      });
+
   }, [data]);
 
   //! fonction min poids
@@ -207,7 +244,7 @@ function Activite({ data }) {
     return Math.min(...sessions.map(d => d.kilogram));
   }
 
-  return <svg ref={svgRefActivite} style={{ width: '100%', height: 'auto', display: 'block' }}></svg>;
+  return <svg ref={svgRefActivite}></svg>;
 }
 
 export default Activite;
