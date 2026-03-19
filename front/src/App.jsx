@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import './styles/App.scss'
-import { getData } from './DonneeAPI/sportseeApi.jsx'
+import { getDataAPI } from './DonneeAPI/sportseeApi.jsx';
+import { getDataMock } from './DonneeAPI/sportseeMockAPI.jsx';
 import Resultat from './Resultat.jsx'
 import Activite from './Graph/Activite.jsx'
 import Session from './Graph/Session.jsx'
 import Objectif from './Graph/Objectif.jsx'
 import Graph from './Graph/Graph.jsx'
+
+const useMock = import.meta.env.VITE_USE_MOCK === 'true';
+export const getData = useMock ? getDataMock : getDataAPI;
 
 function App() {
 	const [data, setData] = useState(null)

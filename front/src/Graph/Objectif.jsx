@@ -32,8 +32,8 @@ function Objectif({ data }) {
         .attr("viewBox", `0 0 ${width} ${height}`);
 
 
-        //! récupération des sessions
-        const sessions = data.main.todayScore || [];
+        //! récupération du score
+        const score = data.main.todayScore ?? 0;
 
         //! dimensions du cercle
         const centerX = width / 2;
@@ -58,7 +58,7 @@ function Objectif({ data }) {
         .innerRadius(innerRadius)
         .outerRadius(radius)
         .startAngle(0)
-        .endAngle(angle(sessions))
+        .endAngle(angle(score))
         .cornerRadius(10); 
 
         //! fond du cercle (blanc)
@@ -90,7 +90,7 @@ function Objectif({ data }) {
         .attr("font-size", "26px")
         .attr("font-weight", "bold")
         .attr("fill", "#282D30")
-        .text(`${Math.round(sessions * 100)}%`);
+        .text(`${Math.round(score * 100)}%`);
 
         svg.append("text")
         .attr("x", centerX)
