@@ -8,9 +8,6 @@ import Session from './Graph/Session.jsx'
 import Objectif from './Graph/Objectif.jsx'
 import Graph from './Graph/Graph.jsx'
 
-const useMock = import.meta.env.VITE_USE_MOCK === 'true';
-export const getData = useMock ? getDataMock : getDataAPI;
-
 function App() {
 	const [data, setData] = useState(null)
 	const [error, setError] = useState('')
@@ -19,10 +16,15 @@ function App() {
 	useEffect(() => {
 		const loadData = async () => {
 			try {
-				const response = await getData(Id)
+				const response = await getDataAPI(Id)
 				setData(response)
-			} catch (err) {
-				setError(err.message)
+			} catch {
+				try {
+					const response = await getDataMock(Id)
+					setData(response)
+				} catch (err) {
+					setError(err.message)
+				}
 			}
 		}
 
