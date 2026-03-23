@@ -96,7 +96,7 @@ function Activite({ data }) {
       .style("font-weight", "500")
       .attr("dx", 15);
 
-    //! lignes de grille horizontales (dessinées avant les barres)
+    //! grille horizontales en Pointillé
     yPoids.ticks(3).forEach(v => {
       svg.append("line")
         .attr("x1", 50)
@@ -107,7 +107,7 @@ function Activite({ data }) {
         .attr("stroke-dasharray", "3,3");
     });
 
-    //! fonction mutualisée pour les barres (poids et calories)
+    //! Barres (poids et calories)
     const drawBars = (className, valueScale, dataKey, color, offsetX) => {
       svg.selectAll(`.${className}`)
         .data(sessions)
@@ -122,7 +122,7 @@ function Activite({ data }) {
         .attr("rx", 3);
     };
 
-    //! barres poids et calories
+     //! Génération des barres 
     drawBars("poids", yPoids, "kilogram", "#282D30", 0);
     drawBars("calories", yCalories, "calories", "#E60000", 12);
 
@@ -145,7 +145,7 @@ function Activite({ data }) {
     const tooltipKg = createTooltipText(25);
     const tooltipCal = createTooltipText(55);
 
-    //? Zones de capture ET fonds gris (fusionnés pour plus de simplicité)
+    //? Survol (hover)
     svg
       .selectAll(".hover-zone")
       .data(sessions)
@@ -159,10 +159,10 @@ function Activite({ data }) {
       .attr("fill", "#C4C4C4")
       .attr("opacity", 0) // Caché par défaut, mais intercepte la souris
       .on("mouseover", function(event, d) {
-        // Affiche directement ce fond gris
-        select(this).attr("opacity", 0.5);
+        // Affiche directement au fond gris
+        select(this).attr("opacity", 0.3);
 
-        // Affiche et met à jour la tooltip
+        // Maj la tooltip
         tooltip.style("display", "block");
         tooltipKg.text(`${d.kilogram}kg`);
         tooltipCal.text(`${d.calories}Kcal`);
