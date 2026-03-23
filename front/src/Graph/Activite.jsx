@@ -31,9 +31,13 @@ function Activite({ data }) {
     const sessions = data.activity.sessions || [];
     const dayLabels = sessions.map((_, i) => i + 1);
 
+
+
+
     //! échelle X
     const x = scaleBand()
       .domain(dayLabels)
+      
       .range([50, width - 40])
       .padding(0.4);
 

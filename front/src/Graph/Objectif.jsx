@@ -55,11 +55,11 @@ function Objectif({ data }) {
 
         //! arc de progression
         const arcProgress = arc()
-        .innerRadius(innerRadius)
-        .outerRadius(radius)
-        .startAngle(0)
-        .endAngle(angle(score))
-        .cornerRadius(10); 
+            .innerRadius(innerRadius)
+            .outerRadius(radius)
+            .startAngle(-angle(score)-30 * (Math.PI / 180)) // Décalage de -30 degrés
+            .endAngle(0)
+            .cornerRadius(10);
 
         //! fond du cercle (blanc)
         svg.append("path")
@@ -72,15 +72,6 @@ function Objectif({ data }) {
         .attr("d", arcProgress)
         .attr("fill", "#FF0000")
         .attr("transform", `translate(${centerX}, ${centerY})`);
-
-        //! bordure grise fine
-        svg.append("circle")
-        .attr("cx", centerX)
-        .attr("cy", centerY)
-        .attr("r", radius)
-        .attr("fill", "none")
-        .attr("stroke", "transparent") 
-        .attr("stroke-width", 0);
 
         //! textes centraux
         svg.append("text")
