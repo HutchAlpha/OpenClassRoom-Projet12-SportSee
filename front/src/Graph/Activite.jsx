@@ -31,13 +31,9 @@ function Activite({ data }) {
     const sessions = data.activity.sessions || [];
     const dayLabels = sessions.map((_, i) => i + 1);
 
-
-
-
     //! échelle X
     const x = scaleBand()
       .domain(dayLabels)
-      
       .range([50, width - 40])
       .padding(0.4);
 
@@ -113,8 +109,15 @@ function Activite({ data }) {
     const yAxisG = svg.append("g")
       .attr("transform", `translate(${width - 40}, 0)`)
       .call(axisRight(yPoids).ticks(3));
+      
     yAxisG.select(".domain").remove();
     yAxisG.selectAll(".tick line").remove();
+
+    yAxisG.selectAll("text")
+      .attr("fill", "#9B9EAC")
+      .style("font-size", "14px")
+      .style("font-weight", "500")
+      .attr("dx", 15);
 
     //! lignes de grille horizontales
     yPoids.ticks(3).forEach(v => {
