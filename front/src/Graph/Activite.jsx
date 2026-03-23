@@ -34,7 +34,7 @@ function Activite({ data }) {
     //! échelle X
     const x = scaleBand()
       .domain(dayLabels)
-      .range([50, width - 40])
+      .range([50, width - 80]) 
       .padding(0.4);
 
     //! échelle Y calories
@@ -57,7 +57,7 @@ function Activite({ data }) {
       .attr("fill", "#20253A")
       .text("Activité quotidienne");
 
-    //! légendes (regroupées pour éviter les doublons)
+    //! légendes
     const legends = [
       { text: "Poids (kg)", color: "#282D30", cx: width - 310, tx: width - 295 },
       { text: "Calories brûlées (kCal)", color: "#E60000", cx: width - 200, tx: width - 185 }
@@ -84,7 +84,7 @@ function Activite({ data }) {
 
     //! axe Y droite
     const yAxisG = svg.append("g")
-      .attr("transform", `translate(${width - 40}, 0)`)
+      .attr("transform", `translate(${width - 60}, 0)`)
       .call(axisRight(yPoids).ticks(3));
       
     yAxisG.select(".domain").remove();
@@ -96,11 +96,11 @@ function Activite({ data }) {
       .style("font-weight", "500")
       .attr("dx", 15);
 
-    //! grille horizontales en Pointillé
+    //! grille horizontales en Pointillé 
     yPoids.ticks(3).forEach(v => {
       svg.append("line")
         .attr("x1", 50)
-        .attr("x2", width - 40)
+        .attr("x2", width - 60) 
         .attr("y1", yPoids(v))
         .attr("y2", yPoids(v))
         .attr("stroke", "#DEDEDE")
@@ -122,7 +122,7 @@ function Activite({ data }) {
         .attr("rx", 3);
     };
 
-     //! Génération des barres 
+    //! Génération des barres 
     drawBars("poids", yPoids, "kilogram", "#282D30", 0);
     drawBars("calories", yCalories, "calories", "#E60000", 12);
 
@@ -157,12 +157,10 @@ function Activite({ data }) {
       .attr("width", 56)
       .attr("height", height - 80)
       .attr("fill", "#C4C4C4")
-      .attr("opacity", 0) // Caché par défaut, mais intercepte la souris
+      .attr("opacity", 0) 
       .on("mouseover", function(event, d) {
-        // Affiche directement au fond gris
         select(this).attr("opacity", 0.3);
 
-        // Maj la tooltip
         tooltip.style("display", "block");
         tooltipKg.text(`${d.kilogram}kg`);
         tooltipCal.text(`${d.calories}Kcal`);
@@ -172,11 +170,9 @@ function Activite({ data }) {
         const i = sessions.indexOf(d);
         const [_, yPos] = pointer(event);
         
-        // Suit la souris en hauteur et se place à droite
         tooltip.attr("transform", `translate(${x(i + 1) + 48}, ${yPos - 35})`);
       })
       .on("mouseout", function(event, d) {
-        // Cache le fond gris et la tooltip
         select(this).attr("opacity", 0);
         tooltip.style("display", "none");
       });
