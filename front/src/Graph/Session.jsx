@@ -25,17 +25,11 @@ function Session({ data }) {
       .attr("y2", "0%");
 
     // Début transparent (gauche)
-    linearGradient
-      .append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgba(255, 255, 255, 0.2)");
-
+    linearGradient.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255, 255, 255, 0.2)");
+    
     // Fin opaque (droite)
-    linearGradient
-      .append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "rgba(255, 255, 255, 0.8)");
-
+    linearGradient.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255, 255, 255, 0.8)");
+  
     //! FOND ROUGE
     svg.append("rect")
       .attr("width", "100%")
