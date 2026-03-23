@@ -107,33 +107,16 @@ function Session({ data }) {
       .style("font-weight", "500");
 
     //! titre
-    svg.append("text")
-      .attr("x", 20)
-      .attr("y", 45)
-      .attr("font-size", "15px")
-      .attr("fill", "rgba(255,255,255,0.5)")
-      .text("Durée moyenne des");
+    const titleG = svg.append("g").attr("fill", "rgba(255,255,255,0.5)").attr("font-size", "15px");
+    titleG.append("text").attr("x", 20).attr("y", 45).text("Durée moyenne des");
+    titleG.append("text").attr("x", 20).attr("y", 65).text("sessions");
 
-    svg.append("text")
-      .attr("x", 20)
-      .attr("y", 65)
-      .attr("font-size", "15px")
-      .attr("fill", "rgba(255,255,255,0.5)")
-      .text("sessions");
 
     //? Halo du point au survol
-    const hoverCircleHalo = svg
-      .append("circle")
-      .attr("r", 10)
-      .attr("fill", "rgba(255, 255, 255, 0.3)")
-      .style("opacity", 0);
-
+    const hoverCircleHalo = svg.append("circle").attr("r", 10).attr("fill", "rgba(255, 255, 255, 0.3)").style("opacity", 0);
     //? Point blanc au survol
-    const hoverCircle = svg
-      .append("circle")
-      .attr("r", 4)
-      .attr("fill", "#FFFFFF")
-      .style("opacity", 0);
+    const hoverCircle = svg.append("circle").attr("r", 4).attr("fill", "#FFFFFF").style("opacity", 0);
+  
 
     //? TOOLTIP
     const tooltip = svg
@@ -181,21 +164,11 @@ function Session({ data }) {
           const currentY = y(value);
 
           // L'ombre de fond 
-          darkOverlay
-            .attr("x", currentX)
-            .attr("width", width - currentX)
-            .style("opacity", 1);
-
+            darkOverlay.attr("x", currentX).attr("width", width - currentX).style("opacity", 1);
+          
           // Mise à jour des points de survol
-          hoverCircleHalo
-            .attr("cx", currentX)
-            .attr("cy", currentY)
-            .style("opacity", 1);
-            
-          hoverCircle
-            .attr("cx", currentX)
-            .attr("cy", currentY)
-            .style("opacity", 1);
+            hoverCircleHalo.attr("cx", currentX).attr("cy", currentY).style("opacity", 1);
+            hoverCircle.attr("cx", currentX).attr("cy", currentY).style("opacity", 1);
 
           const tipX = currentX + 10;
           const tipY = currentY - 30;
