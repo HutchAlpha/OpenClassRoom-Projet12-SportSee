@@ -172,7 +172,7 @@ function Activite({ data }) {
         
         tooltip.attr("transform", `translate(${x(i + 1) + 48}, ${yPos - 35})`);
       })
-      .on("mouseout", function(event, d) {
+      .on("mouseout", function() {
         select(this).attr("opacity", 0);
         tooltip.style("display", "none");
       });

@@ -143,7 +143,6 @@ function Session({ data }) {
         const [xPos] = pointer(event);
         
         // Calcul pour trouver le point le plus proche (scalePoint)
-        const domain = x.domain();
         const range = x.range();
         const step = x.step();
         

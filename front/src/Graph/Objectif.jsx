@@ -46,7 +46,7 @@ function Objectif({ data }) {
         .range([0, 2 * Math.PI]);
 
 
-        //! générateur d'arc background complet
+        //! générateur d'arc 
         const arcBg = arc()
         .innerRadius(0)
         .outerRadius(innerRadius)
