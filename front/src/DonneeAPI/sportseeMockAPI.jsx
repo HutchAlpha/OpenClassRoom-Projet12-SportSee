@@ -1,6 +1,7 @@
-import {USER_MAIN_DATA,USER_ACTIVITY,USER_AVERAGE_SESSIONS,USER_PERFORMANCE} from '../mockData.js';
+import { USER_MAIN_DATA, USER_ACTIVITY, USER_AVERAGE_SESSIONS, USER_PERFORMANCE } from '../mockData.js';
+import { UserModel } from './sportseeApi.jsx';
 
-    export async function getDataMock(userId) {
+export async function getDataMock(userId) {
     const id = Number(userId);
 
     const main = USER_MAIN_DATA.find((u) => u.id === id);
@@ -12,12 +13,10 @@ import {USER_MAIN_DATA,USER_ACTIVITY,USER_AVERAGE_SESSIONS,USER_PERFORMANCE} fro
         throw new Error(`Données mock introuvables pour l'utilisateur ${id}`);
     }
 
-    const score = main.todayScore ?? main.score ?? 0;
-
-    return {
-        main: { ...main, todayScore: score },
+    return new UserModel({
+        main,
         activity,
         averageSessions,
         performance
-    };
+    });
 }

@@ -1,7 +1,8 @@
 import './styles/Resultat.scss'
 
 function Resultat({ data }) {
-    const keyData = data?.main?.keyData
+    if (!data) return null
+    const keyData = data.keyData
 
     if (!keyData) {
         return null

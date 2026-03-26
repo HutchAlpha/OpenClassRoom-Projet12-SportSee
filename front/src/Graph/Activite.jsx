@@ -28,7 +28,7 @@ function Activite({ data }) {
       .attr("rx", 5);
 
     //! récupération des données
-    const sessions = data.activity.sessions || [];
+    const sessions = data.activity || [];
     const dayLabels = sessions.map((_, i) => i + 1);
 
     //! échelle X

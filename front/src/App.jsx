@@ -40,7 +40,7 @@ function App() {
 	}
 	
 	//!Gestion logique record objectifs
-	const activitySessions = data.activity.sessions;
+	const activitySessions = data.activity;
 
 	let beatRecordCalories = false;
 
@@ -58,7 +58,7 @@ function App() {
 		<button className="BoutonId" onClick={() => setId(12)}>Karl (12)</button>
 		<button className="BoutonId" onClick={() => setId(18)}>Cecilia (18)</button>
 
-		<h1 className="MessageJoueur">Bonjour <span className="NomJoueur">{data.main.userInfos.firstName}</span></h1>
+		<h1 className="MessageJoueur">Bonjour <span className="NomJoueur">{data.userInfos.firstName}</span></h1>
 		{beatRecord && (
 			<p className="Felicitation">Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
 		)}

@@ -44,7 +44,7 @@ function Session({ data }) {
       .attr("viewBox", `0 0 ${width} ${height}`);
 
     //! récupération des sessions
-    const sessions = data.averageSessions?.sessions || [];
+    const sessions = data.averageSessions || [];
 
     //! jours affichés
     const days = ["L", "M", "M", "J", "V", "S", "D"];

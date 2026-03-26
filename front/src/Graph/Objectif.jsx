@@ -33,7 +33,7 @@ function Objectif({ data }) {
 
 
         //! récupération du score
-        const score = data.main.todayScore ?? 0;
+        const score = data.score ?? 0;
 
         //! dimensions du cercle
         const centerX = width / 2;

@@ -12,6 +12,24 @@ async function fetchEndpoint(path) {
   return payload.data
 }
 
+export class UserModel {
+  constructor({ main, activity, averageSessions, performance }) {
+    this.id = main.id
+    this.userInfos = main.userInfos
+    this.score = main.todayScore ?? main.score 
+    this.keyData = main.keyData
+
+    this.activity = activity.sessions
+
+    this.averageSessions = averageSessions.sessions
+
+    this.performance = {
+      kind: performance.kind,
+      data: performance.data
+    }
+  }
+}
+
 export async function getDataAPI(userId) {
   const id = Number(userId)
 
@@ -22,15 +40,10 @@ export async function getDataAPI(userId) {
     fetchEndpoint(`user/${id}/performance`)
   ])
 
-  const score = main.todayScore ?? main.score
-
-  return {
-    main: {
-      ...main,
-      todayScore: score
-    },
-    activity,
-    averageSessions,
-    performance
-  }
+  return new UserModel({
+      main,
+      activity,
+      averageSessions,
+      performance
+  })
 }
