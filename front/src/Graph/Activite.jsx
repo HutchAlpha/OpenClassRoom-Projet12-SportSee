@@ -78,7 +78,8 @@ function Activite({ data }) {
     xAxisG.selectAll("text")
       .attr("fill", "#9B9EAC")
       .attr("dy", "1.5em")
-      .attr("dx", 9.5 - (x.bandwidth() / 2)) 
+      .attr("dx", 9.5 - (x.bandwidth() / 2
+    )) 
       .style("font-size", "14px")
       .style("font-weight", "500");
 

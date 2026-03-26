@@ -51,7 +51,6 @@ function App() {
 	}
 
 	const beatRecord = beatRecordCalories;
-	console.log(`Calories: ${activitySessions.at(-1)?.calories} > ${activitySessions.at(-2)?.calories} ? ${beatRecordCalories}`);
 
 
 	return <div className="App">
