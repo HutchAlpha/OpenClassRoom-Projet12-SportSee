@@ -28,14 +28,7 @@ function Graph({ data }) {
             .attr("viewBox", `0 0 ${width} ${height}`);
 
         //! récupération des sessions
-        const categories = {
-            1: 'Cardio',
-            2: 'Energie',
-            3: 'Endurance',
-            4: 'Force',
-            5: 'Vitesse',
-            6: 'Intensité'
-        };
+        const categories = data.performance.kind || {};
 
         const performanceData = data.performance.data.map(d => ({
             value: d.value,
